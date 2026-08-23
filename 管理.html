@@ -166,7 +166,7 @@
         <td class="hide-sm">${fmt(r.activated_at)}</td>
         <td class="hide-sm">${r.use_count || 0}</td>
         <td><div class="row-actions">
-          <button class="btn small ghost" data-act="extend" data-code="${r.code}">+30天</button>
+          <button class="btn small ghost" data-act="extend" data-code="${r.code}">+续期</button>
           ${revoked
             ? `<button class="btn small ghost" data-act="restore" data-code="${r.code}">恢复</button>`
             : `<button class="btn small danger" data-act="revoke" data-code="${r.code}">停用</button>`}
@@ -247,8 +247,12 @@
     btn.disabled = true;
     try {
       if (act === 'extend') {
-        const data = await api('/api/admin/extend', 'POST', { code, days: 30 });
-        toast(data.ok ? `${code} 已续期30天` : (data.message || '操作失败'));
+        const input = prompt(`要给 ${code} 续期多少天？（在现到期日基础上顺延）`, '7');
+        if (input === null) { btn.disabled = false; return; }
+        const days = Math.min(Math.max(parseInt(input, 10) || 0, 1), 3650);
+        if (!String(input.trim()).match(/^\d+$/)) { toast('请输入有效的天数（数字）'); btn.disabled = false; return; }
+        const data = await api('/api/admin/extend', 'POST', { code, days });
+        toast(data.ok ? `${code} 已续期${days}天` : (data.message || '操作失败'));
       } else if (act === 'revoke' || act === 'restore') {
         const data = await api('/api/admin/status', 'POST', { code, status: act === 'revoke' ? 'revoked' : 'active' });
         toast(data.ok ? '操作成功' : (data.message || '操作失败'));
