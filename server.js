@@ -179,7 +179,8 @@ async function api(req, res, pathname) {
     const days = Math.min(Math.max(Number((body && body.days) || 30), 1), 3650);
     const row = findCode(code);
     if (!row) return json(res, 404, { ok: false, message: "邀请码不存在。" });
-    const base = Math.max(new Date(row.expires_at).getTime(), Date.now());
+    // mode==='set'：从现在起重新设定有效期（覆盖原值）；否则在现到期日基础上顺延
+    const base = body && body.mode === "set" ? Date.now() : Math.max(new Date(row.expires_at).getTime(), Date.now());
     row.expires_at = new Date(base + days * 24 * 3600 * 1000).toISOString();
     row.status = "active";
     saveCodes();
