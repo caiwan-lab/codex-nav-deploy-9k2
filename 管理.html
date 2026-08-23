@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>邀请码管理｜Codex 安装导航</title>
+<style>
+  :root {
+    --ink: #27313a; --muted: #65717b; --paper: #f4f6f2; --panel: #fbfcfa;
+    --line: #cfd8d0; --mint: #0e8a67; --mint-deep: #06664c; --mint-soft: #e0f3ea;
+    --coral: #e96b78; --shadow: 0 18px 46px rgb(25 45 37 / 12%);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100dvh; color: var(--ink);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    background: linear-gradient(135deg, #f8faf7 0%, var(--paper) 58%, #eef3ed 100%);
+  }
+  .shell { width: min(1040px, calc(100% - 40px)); margin: 0 auto; padding: 34px 0 60px; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; color: var(--muted); font-size: 14px; font-weight: 700; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .brand-mark { width: 22px; height: 22px; border: 2px solid var(--ink); border-radius: 7px; background: linear-gradient(135deg, #ffffff 44%, var(--mint-soft) 44%); }
+  h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -.03em; }
+  .sub { margin: 0 0 26px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+  .card { padding: 26px; border: 1px solid var(--line); border-radius: 16px; background: rgb(251 252 250 / 90%); box-shadow: var(--shadow); }
+  .login-card { max-width: 420px; margin: 8vh auto 0; }
+  input, button { font: inherit; }
+  input { width: 100%; height: 52px; padding: 0 14px; border: 1px solid #b9c8be; border-radius: 10px; background: #fff; outline: none; }
+  input:focus { border-color: var(--mint); box-shadow: 0 0 0 4px rgb(14 138 103 / 13%); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 46px; padding: 0 20px; border: 0; border-radius: 10px; background: var(--mint); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .btn:hover { background: var(--mint-deep); }
+  .btn.ghost { background: #fff; color: var(--mint-deep); border: 1px solid var(--mint); }
+  .btn.small { min-height: 34px; padding: 0 12px; font-size: 13px; }
+  .btn.danger { background: #fff; color: #b54250; border: 1px solid var(--coral); }
+  .feedback { min-height: 22px; margin: 8px 0 14px; color: #b54250; font-size: 14px; }
+  .create-row { display: grid; grid-template-columns: 1.4fr .8fr auto; gap: 12px; align-items: end; }
+  label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; padding: 10px 10px; color: var(--muted); font-size: 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  td { padding: 12px 10px; border-bottom: 1px solid #e4ece6; vertical-align: top; }
+  tr:hover td { background: #f6faf7; }
+  .code { font-family: ui-monospace, Menlo, monospace; font-weight: 700; letter-spacing: .04em; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+  .pill.active { background: var(--mint-soft); color: var(--mint-deep); }
+  .pill.revoked { background: #fdecee; color: #b54250; }
+  .pill.expired { background: #f3f0e7; color: #8a7a4a; }
+  .row-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .empty { padding: 34px 0; text-align: center; color: var(--muted); font-size: 14px; }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; margin: 26px 0 14px; }
+  .toolbar h2 { margin: 0; font-size: 18px; }
+  .refresh { color: var(--mint-deep); background: none; border: none; font-size: 13px; cursor: pointer; }
+  .toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); padding: 10px 18px; border-radius: 10px; background: var(--mint-deep); color: #fff; font-size: 14px; opacity: 0; transition: opacity .25s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+  @media (max-width: 720px) {
+    .create-row { grid-template-columns: 1fr; }
+    table { font-size: 13px; }
+    .hide-sm { display: none; }
+  }
+</style>
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark"></span><span>Codex 零基础答疑营</span></div>
+    <span>邀请码管理后台</span>
+  </header>
+
+  <!-- 登录视图 -->
+  <section id="login-view" class="card login-card">
+    <h1>管理后台登录</h1>
+    <p class="sub">只有老师需要打开这个页面。输入管理密码后管理邀请码。</p>
+    <label for="admin-pass">管理密码</label>
+    <input id="admin-pass" type="password" autocomplete="off" placeholder="请输入管理密码" />
+    <p class="feedback" id="login-feedback"></p>
+    <button class="btn" id="login-btn" style="width:100%">登录</button>
+  </section>
+
+  <!-- 管理视图 -->
+  <section id="admin-view" style="display:none">
+    <h1>邀请码管理</h1>
+    <p class="sub">学员购买后，在这里为TA生成一个专属邀请码并发给TA。邀请码从学员第一次使用开始计时之外，也会在到期日自动失效；随时可以续期或停用。</p>
+
+    <div class="card">
+      <div class="create-row">
+        <div>
+          <label for="new-note">学员备注（昵称 / 微信名，方便你自己认）</label>
+          <input id="new-note" type="text" placeholder="例如：小王（8月班）" />
+        </div>
+        <div>
+          <label for="new-days">有效期（天）</label>
+          <input id="new-days" type="number" min="1" max="3650" value="30" />
+        </div>
+        <button class="btn" id="create-btn">生成邀请码</button>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <h2>全部邀请码</h2>
+      <button class="refresh" id="refresh-btn">↻ 刷新列表</button>
+    </div>
+    <div class="card" style="padding:14px 18px">
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr><th>邀请码</th><th>备注</th><th>状态</th><th>有效期至</th><th class="hide-sm">首次使用</th><th class="hide-sm">使用次数</th><th>操作</th></tr>
+          </thead>
+          <tbody id="codes-tbody">
+            <tr><td colspan="7" class="empty">加载中…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+  const state = { key: sessionStorage.getItem('nav_admin_key') || '' };
+  const $ = (id) => document.getElementById(id);
+
+  function toast(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  async function api(path, method, body) {
+    const res = await fetch(path, {
+      method: method || 'GET',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': state.key },
+      body: body ? JSON.stringify(body) : null,
+    });
+    return res.json();
+  }
+
+  function fmt(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+
+  function statusPill(row) {
+    if (row.status === 'revoked') return '<span class="pill revoked">已停用</span>';
+    const expired = new Date(row.expires_at).getTime() <= Date.now();
+    if (expired) return '<span class="pill expired">已过期</span>';
+    const used = row.activated_at ? '已使用' : '未使用';
+    return `<span class="pill active">有效·${used}</span>`;
+  }
+
+  function render(rows) {
+    const tbody = $('codes-tbody');
+    if (!rows.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">还没有邀请码。用上方表单生成第一个。</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows.map((r) => {
+      const revoked = r.status === 'revoked';
+      return `<tr>
+        <td><span class="code">${r.code}</span>
+          <div class="row-actions"><button class="btn small ghost" data-act="copy" data-code="${r.code}">复制</button></div>
+        </td>
+        <td>${(r.note || '').replace(/</g, '&lt;') || '—'}</td>
+        <td>${statusPill(r)}</td>
+        <td>${fmt(r.expires_at)}</td>
+        <td class="hide-sm">${fmt(r.activated_at)}</td>
+        <td class="hide-sm">${r.use_count || 0}</td>
+        <td><div class="row-actions">
+          <button class="btn small ghost" data-act="extend" data-code="${r.code}">+30天</button>
+          ${revoked
+            ? `<button class="btn small ghost" data-act="restore" data-code="${r.code}">恢复</button>`
+            : `<button class="btn small danger" data-act="revoke" data-code="${r.code}">停用</button>`}
+          <button class="btn small danger" data-act="delete" data-code="${r.code}">删除</button>
+        </div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  async function loadCodes() {
+    try {
+      const data = await api('/api/admin/codes');
+      if (data.ok) render(data.codes);
+      else $('codes-tbody').innerHTML = `<tr><td colspan="7" class="empty">${data.message || '加载失败'}</td></tr>`;
+    } catch {
+      $('codes-tbody').innerHTML = '<tr><td colspan="7" class="empty">网络异常，请刷新重试。</td></tr>';
+    }
+  }
+
+  function showAdmin(ok) {
+    $('login-view').style.display = ok ? 'none' : 'block';
+    $('admin-view').style.display = ok ? 'block' : 'none';
+    if (ok) loadCodes();
+  }
+
+  async function tryLogin() {
+    const pass = $('admin-pass').value.trim();
+    if (!pass) { $('login-feedback').textContent = '请输入管理密码。'; return; }
+    state.key = pass;
+    try {
+      const data = await api('/api/admin/codes');
+      if (data.ok) {
+        sessionStorage.setItem('nav_admin_key', pass);
+        showAdmin(true);
+      } else {
+        state.key = '';
+        $('login-feedback').textContent = data.message || '密码不正确。';
+      }
+    } catch {
+      $('login-feedback').textContent = '网络异常，请重试。';
+    }
+  }
+
+  $('login-btn').addEventListener('click', tryLogin);
+  $('admin-pass').addEventListener('keydown', (e) => { if (e.key === 'Enter') tryLogin(); });
+  $('refresh-btn').addEventListener('click', loadCodes);
+
+  $('create-btn').addEventListener('click', async () => {
+    const note = $('new-note').value.trim();
+    const validDays = Number($('new-days').value) || 30;
+    const btn = $('create-btn');
+    btn.disabled = true; btn.textContent = '生成中…';
+    try {
+      const data = await api('/api/admin/codes', 'POST', { note, validDays });
+      if (data.ok) {
+        toast(`已生成：${data.code.code}`);
+        $('new-note').value = '';
+        loadCodes();
+      } else {
+        toast(data.message || '生成失败');
+      }
+    } catch { toast('网络异常'); }
+    btn.disabled = false; btn.textContent = '生成邀请码';
+  });
+
+  $('codes-tbody').addEventListener('click', async (e) => {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const act = btn.dataset.act;
+    const code = btn.dataset.code;
+
+    if (act === 'copy') {
+      try { await navigator.clipboard.writeText(code); toast(`已复制：${code}`); } catch { toast(code); }
+      return;
+    }
+    if (act === 'delete' && !confirm(`确定删除邀请码 ${code} 吗？删除后学员立即无法使用。`)) return;
+
+    btn.disabled = true;
+    try {
+      if (act === 'extend') {
+        const data = await api('/api/admin/extend', 'POST', { code, days: 30 });
+        toast(data.ok ? `${code} 已续期30天` : (data.message || '操作失败'));
+      } else if (act === 'revoke' || act === 'restore') {
+        const data = await api('/api/admin/status', 'POST', { code, status: act === 'revoke' ? 'revoked' : 'active' });
+        toast(data.ok ? '操作成功' : (data.message || '操作失败'));
+      } else if (act === 'delete') {
+        const data = await api('/api/admin/delete', 'POST', { code });
+        toast(data.ok ? '已删除' : '操作失败');
+      }
+      loadCodes();
+    } catch { toast('网络异常'); }
+  });
+
+  // 已登录则直接进入管理视图
+  if (state.key) {
+    api('/api/admin/codes').then((d) => showAdmin(!!d.ok)).catch(() => showAdmin(false));
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>前置条件｜Codex 安装导航</title>
+    <link rel="stylesheet" href="./安装导航-共享样式.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark"></span><span>Codex 零基础答疑营</span></div>
+        <span class="page-count">01A / 前置条件</span>
+      </header>
+      <section class="page">
+        <p class="eyebrow">当前卡点</p>
+        <h1>还没有魔法</h1>
+        <p class="lead">先完成自己的前置准备。完成后，不是直接跳到下载，而是继续确认自己会不会安装、打开使用魔法的客户端。</p>
+        <div class="panel">
+          <h2>前置条件说明</h2>
+          <p>这一块由服务方补充说明链接和录屏；学习者看完后，再继续下一项判断。</p>
+          <a id="precondition-guide-link" class="button ghost" aria-disabled="true">说明链接待填写</a>
+          <div id="precondition-video-slot" class="video-slot">
+            <div><span class="play">▶</span><strong>录屏待放入</strong><span>服务方填入自己的录屏路径后，这里会自动显示播放器。</span></div>
+          </div>
+          <div class="notice caution"><strong>这一页不在 HTML 中预置第三方服务信息。</strong>素材由服务方自行填写与维护。</div>
+          <div class="button-row"><a class="button" href="./安装导航-前置环境-安装判断.html">我已经准备好了 →</a><a class="button ghost" href="./安装导航-前置条件.html">返回前置条件</a></div>
+        </div>
+      </section>
+    </main>
+    <script>
+      // 服务方填写区：把引号中的内容替换为自己的链接或本地录屏相对路径。
+      // 例如：const PRECONDITION_GUIDE_URL = "https://你的说明链接";
+      // 例如：const PRECONDITION_VIDEO_PATH = "./素材/录屏/前置条件说明.mp4";
+      const PRECONDITION_GUIDE_URL = "https://xeno.menu";
+      const PRECONDITION_VIDEO_PATH = "./素材/录屏/如何购买魔法.mp4";
+      const guideLink = document.getElementById("precondition-guide-link");
+      const videoSlot = document.getElementById("precondition-video-slot");
+      if (PRECONDITION_GUIDE_URL.trim()) {
+        guideLink.href = PRECONDITION_GUIDE_URL.trim();
+        guideLink.target = "_blank";
+        guideLink.rel = "noopener noreferrer";
+        guideLink.removeAttribute("aria-disabled");
+        guideLink.textContent = "打开魔法服务官网 xeno.menu ↗";
+      }
+      if (PRECONDITION_VIDEO_PATH.trim()) {
+        const video = document.createElement("video");
+        video.className = "guide-video";
+        video.controls = true;
+        video.preload = "metadata";
+        video.src = PRECONDITION_VIDEO_PATH.trim();
+        videoSlot.replaceWith(video);
+      }
+    </script>
+  <script src="./gate.js"></script></body>
+</html>
