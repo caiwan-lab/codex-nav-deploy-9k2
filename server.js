@@ -206,6 +206,8 @@ function serveStatic(req, res, pathname) {
   fs.stat(filePath, (err, stat) => {
     if (err || !stat.isFile()) { res.writeHead(404); return res.end("Not Found"); }
     const type = MIME[path.extname(filePath).toLowerCase()] || "application/octet-stream";
+    // 视频文件让 Cloudflare 边缘缓存30天，避免每次回源硅谷导致首开慢
+    const cache = type === "video/mp4" ? "public, max-age=2592000" : "no-cache";
     const range = req.headers.range;
     if (range) {
       const m = /bytes=(\d*)-(\d*)/.exec(range);
@@ -219,10 +221,11 @@ function serveStatic(req, res, pathname) {
         "Content-Range": `bytes ${start}-${end}/${stat.size}`,
         "Accept-Ranges": "bytes",
         "Content-Length": end - start + 1,
+        "Cache-Control": cache,
       });
       fs.createReadStream(filePath, { start, end }).pipe(res);
     } else {
-      res.writeHead(200, { "Content-Type": type, "Content-Length": stat.size, "Accept-Ranges": "bytes" });
+      res.writeHead(200, { "Content-Type": type, "Content-Length": stat.size, "Accept-Ranges": "bytes", "Cache-Control": cache });
       fs.createReadStream(filePath).pipe(res);
     }
   });
