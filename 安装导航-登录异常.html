@@ -1,4 +1,81 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>登录异常｜Codex 安装导航</title><link rel="stylesheet" href="./安装导航-共享样式.css" /></head>
-<body><main class="shell"><header class="topbar"><div class="brand"><span class="brand-mark"></span><span>Codex 零基础答疑营</span></div><span class="page-count">03B / 登录异常</span></header>
-<section class="page"><p class="eyebrow">当前卡点</p><h1>验证解决办法</h1><p class="lead">跟着录屏解决手机验证问题。如果看完仍然卡住，再按下面的格式整理信息去群内提问。</p><div class="panel"><video class="guide-video" controls preload="metadata"><source src="./素材/录屏/如何解决codex登录时手机验证的问题.mp4" type="video/mp4" />你的浏览器无法播放这段录屏。</video><ul class="helper-list"><li>你想完成什么：例如“在 Codex 桌面端完成登录”。</li><li>已经做到了哪一步：按顺序写已点过的页面或按钮。</li><li>现在看到什么：保留完整报错画面，并遮住账号、验证码等敏感信息。</li></ul><div class="notice error"><strong>请勿在群里发送密码、验证码、Cookie 或支付信息。</strong>此页不提供账号、接码、代登录或验证绕过服务。</div><div class="button-row"><a class="button" href="./安装导航-完成.html">我已经解决了 →</a><a class="button ghost" href="./安装导航-卡点选择页原型.html">回到卡点首页</a></div></div></section></main><script src="./gate.js"></script></body></html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>验证解决办法｜Codex 安装导航</title>
+  <link rel="stylesheet" href="./安装导航-共享样式.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar" aria-label="页面标题">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>Codex 零基础答疑营</span></div>
+      <span class="page-count">03B / 登录异常</span>
+    </header>
+
+    <section class="page" aria-labelledby="page-title">
+      <p class="eyebrow">当前卡点</p>
+      <h1 id="page-title">验证解决办法</h1>
+      <p class="lead">手机验证收不到时，先回答下面这个问题，再走对应的分支。两个分支都能登录，只是"风险偏好"不一样。</p>
+
+      <!-- 决策点 -->
+      <div class="decision-node" role="group" aria-label="决策点">
+        <p class="decision-eyebrow">先问自己一个问题</p>
+        <p class="decision-question">账号 <strong>「偶尔出小问题」</strong>，你能接受吗？</p>
+      </div>
+
+      <div class="branches" aria-label="两种分支">
+
+        <!-- 分支一 -->
+        <article class="panel method-card branch-card">
+          <div class="branch-head">
+            <span class="branch-tag tag-safe">分支一</span>
+            <span class="branch-condition">如果你 <strong>不能</strong> 接受 → 走这条</span>
+          </div>
+          <h2 class="method-title">主力邮箱 + 国外旅行电话卡</h2>
+          <p class="method-sub">账号完全属于自己，几乎不会出问题。代价是：要等 SIM 卡到手、可能多花点钱。</p>
+          <ol class="method-steps">
+            <li>准备一个能正常收邮件的主力邮箱（QQ / 163 / Outlook / Gmail 都行），用来注册 OpenAI 账号。</li>
+            <li>买一张国外旅行电话卡：淘宝或拼多多搜「海外电话卡」或「eSIM 漫游」，按你登录时所在地区挑（美区 / 欧区 / 日区都可以），几块钱就能买到。</li>
+            <li>把卡插进手机或开通 eSIM，激活后会得到一个国外手机号（一般是 +1 / +44 / +81 开头），用它接收 OpenAI 发来的 6 位验证码。</li>
+            <li>把验证码填进登录页，就完成了。一次用完不需要可以扔掉，不续费即可。</li>
+          </ol>
+          <div class="notice">
+            <strong>小贴士：</strong>旅行电话卡分「按天」和「按流量」两种计费，Codex 登录只收一次短信，几块钱的短期卡足够，不用买贵的。
+          </div>
+        </article>
+
+        <!-- 分支二 -->
+        <article class="panel method-card branch-card">
+          <div class="branch-head">
+            <span class="branch-tag tag-alt">分支二</span>
+            <span class="branch-condition">如果你 <strong>能</strong> 接受 → 走这条</span>
+          </div>
+          <h2 class="method-title">月抛接码电话</h2>
+          <p class="method-sub">我自己在用这套方案，目前没遇到过问题。账号去海鲜市场随便买一个就行，这个方案主要是解决验证码这一步。</p>
+          <ol class="method-steps">
+            <li>点开 <a class="ext-link" href="https://wzyp.cn/item/ck1e7u" target="_blank" rel="noopener">https://wzyp.cn/item/ck1e7u</a>，填写手机号跟设置密码，就能获得验证码。</li>
+            <li>拿到国外手机号（一般是 +1 开头）后，填进 OpenAI 注册/登录页的「手机号」一项。</li>
+            <li>收到 6 位验证码后填进去，登录就完成了。</li>
+          </ol>
+          <p class="video-caption">录屏演示 ↓</p>
+          <video class="guide-video" controls preload="metadata">
+            <source src="./素材/录屏/如何接码.mp4" type="video/mp4" />
+            你的浏览器无法播放这段录屏。
+          </video>
+          <div class="notice caution">
+            <strong>注意：</strong>邮箱去海鲜市场（闲鱼 / 拼多多 / 小红书）随便挑一家销量还行的就行；月抛电话只能用 1 个月，到期前要重新买一个换号，否则登录会再次被卡住。
+          </div>
+        </article>
+
+      </div>
+
+      <div class="button-row">
+        <a class="button" href="./安装导航-完成.html">我已经解决了 →</a>
+        <a class="button ghost" href="./安装导航-卡点选择页原型.html">回到卡点首页</a>
+      </div>
+    </section>
+  </main>
+  <script src="./gate.js"></script>
+</body>
+</html>
